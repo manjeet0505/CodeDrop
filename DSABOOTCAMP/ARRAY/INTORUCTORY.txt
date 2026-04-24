@@ -1,0 +1,289 @@
+Topic: Arrays — Complete Guide
+
+━━━━━━━━━━━━━━━━━━━━━━
+WHAT IS AN ARRAY?
+━━━━━━━━━━━━━━━━━━━━━━
+
+An array stores elements of the SAME TYPE 
+in CONTIGUOUS memory locations.
+
+Each element is accessed via an INDEX 
+starting from 0.
+
+int[] arr = {10, 20, 30, 40, 50};
+Index:        0   1   2   3   4
+
+arr[0] = 10  (valid)
+arr[4] = 50  (valid)
+arr[5] = ArrayIndexOutOfBoundsException (invalid)
+
+Think of it like numbered lockers —
+you can directly open locker #3 without 
+opening 1 and 2 first.
+
+━━━━━━━━━━━━━━━━━━━━━━
+TYPES OF ARRAYS
+━━━━━━━━━━━━━━━━━━━━━━
+
+1. 1D Array (most common)
+int[] arr = new int[5];
+int[] arr = {1, 2, 3, 4, 5};
+
+2. 2D Array (matrix)
+int[][] matrix = new int[3][3];
+int[][] matrix = {
+    {1, 2, 3},
+    {4, 5, 6},
+    {7, 8, 9}
+};
+
+3. Jagged Array (rows of different lengths)
+int[][] jagged = new int[3][];
+jagged[0] = new int[2];
+jagged[1] = new int[4];
+jagged[2] = new int[3];
+
+━━━━━━━━━━━━━━━━━━━━━━
+DECLARATION AND INITIALIZATION
+━━━━━━━━━━━━━━━━━━━━━━
+
+// Method 1 — declare then initialize
+int[] arr = new int[5];
+// default values → {0, 0, 0, 0, 0}
+
+// Method 2 — declare with values
+int[] arr = {10, 20, 30, 40, 50};
+
+// Method 3 — using new keyword with values
+int[] arr = new int[]{10, 20, 30};
+
+// Length of array
+System.out.println(arr.length); // 5
+
+Interview Trap:
+arr.length   — NO brackets (it is a property)
+string.length() — WITH brackets (it is a method)
+
+━━━━━━━━━━━━━━━━━━━━━━
+ARRAY TRAVERSAL
+━━━━━━━━━━━━━━━━━━━━━━
+
+// Forward traversal
+for(int i = 0; i < arr.length; i++){
+    System.out.print(arr[i] + " ");
+}
+
+// Enhanced for loop
+for(int num : arr){
+    System.out.print(num + " ");
+}
+
+// Reverse traversal
+for(int i = arr.length-1; i >= 0; i--){
+    System.out.print(arr[i] + " ");
+}
+
+━━━━━━━━━━━━━━━━━━━━━━
+TIME AND SPACE COMPLEXITY
+━━━━━━━━━━━━━━━━━━━━━━
+
+Operation            Time        Space
+──────────────────────────────────────
+Access (arr[i])   -> O(1)        O(1)
+Search (unsorted) -> O(n)        O(1)
+Search (sorted)   -> O(log n)    O(1)
+Insert at end     -> O(1)        O(1)
+Insert at middle  -> O(n)        O(1)
+Insert at start   -> O(n)        O(1)
+Delete at end     -> O(1)        O(1)
+Delete at middle  -> O(n)        O(1)
+Traversal         -> O(n)        O(1)
+
+Why is insert/delete at middle O(n)?
+Because all elements after that position 
+need to be SHIFTED.
+
+━━━━━━━━━━━━━━━━━━━━━━
+MEMORY REPRESENTATION
+━━━━━━━━━━━━━━━━━━━━━━
+
+int[] arr = {10, 20, 30, 40, 50};
+
+Memory Address:
+1000 -> 10
+1004 -> 20  (int = 4 bytes)
+1008 -> 30
+1012 -> 40
+1016 -> 50
+
+Formula:
+Address of arr[i] = Base + (i x size of datatype)
+
+This is WHY access is O(1) —
+we calculate the address directly.
+No traversal needed.
+
+━━━━━━━━━━━━━━━━━━━━━━
+ADVANTAGES OF ARRAYS
+━━━━━━━━━━━━━━━━━━━━━━
+
+- O(1) random access using index
+- Cache-friendly (contiguous memory)
+- Simple and easy to use
+- Best for storing fixed-size data
+
+━━━━━━━━━━━━━━━━━━━━━━
+DISADVANTAGES OF ARRAYS
+━━━━━━━━━━━━━━━━━━━━━━
+
+- Fixed size (cannot grow dynamically)
+- Insertion/deletion is expensive O(n)
+- Wasted memory if not fully used
+- Same datatype only
+
+Solution — Use ArrayList in Java
+which is a dynamic array (resizable)
+
+━━━━━━━━━━━━━━━━━━━━━━
+ARRAY vs ARRAYLIST
+━━━━━━━━━━━━━━━━━━━━━━
+
+Feature         Array          ArrayList
+─────────────────────────────────────────
+Size            Fixed          Dynamic
+Syntax          arr[i]         list.get(i)
+Primitives      Yes            No (wrapper)
+Performance     Faster         Slightly slower
+Memory          Less           More overhead
+Default value   0 / null       —
+
+// ArrayList example:
+ArrayList<Integer> list = new ArrayList<>();
+list.add(10);
+list.add(20);
+list.get(0);    // 10
+list.size();    // 2
+list.remove(0); // removes index 0
+
+━━━━━━━━━━━━━━━━━━━━━━
+USEFUL BUILT-IN METHODS
+━━━━━━━━━━━━━━━━━━━━━━
+
+import java.util.Arrays;
+
+// Sort array
+Arrays.sort(arr);              // O(n log n)
+
+// Binary search (array must be sorted)
+Arrays.binarySearch(arr, 30); // O(log n)
+
+// Fill array with a value
+Arrays.fill(arr, 0);
+
+// Copy array
+int[] copy = Arrays.copyOf(arr, arr.length);
+
+// Copy range
+int[] part = Arrays.copyOfRange(arr, 1, 4);
+
+// Compare two arrays
+Arrays.equals(arr1, arr2); // true/false
+
+// Print array
+System.out.println(Arrays.toString(arr));
+// Output: [10, 20, 30, 40, 50]
+
+━━━━━━━━━━━━━━━━━━━━━━
+INTERVIEW QUESTIONS
+━━━━━━━━━━━━━━━━━━━━━━
+
+Q1. What is the difference between 
+    arr.length and arr.length()?
+
+Answer:
+arr.length is a PROPERTY (no brackets)
+used for arrays.
+String.length() is a METHOD (with brackets)
+used for strings.
+
+---
+
+Q2. Why is array access O(1)?
+
+Answer:
+Because address is calculated directly:
+Base + (index x datatype size)
+No traversal needed.
+
+---
+
+Q3. What happens when you declare 
+    int[] arr = new int[5]?
+
+Answer:
+JVM allocates 20 bytes (5 x 4) in heap
+memory and initializes all elements to 0.
+
+---
+
+Q4. Array vs LinkedList — when to use what?
+
+Answer:
+Array     — when you need fast access O(1)
+LinkedList — when you need frequent 
+insert/delete at known positions O(1)
+
+---
+
+Q5. Can an array store different data types?
+
+Answer:
+No. Arrays are homogeneous.
+Use Object[] for mixed types but
+it is not recommended in practice.
+
+━━━━━━━━━━━━━━━━━━━━━━
+PRACTICE PROBLEMS
+(Solve before tomorrow)
+━━━━━━━━━━━━━━━━━━━━━━
+
+Easy:
+1. Print all elements of array
+2. Print array in reverse
+3. Find sum of all elements
+4. Count even and odd numbers
+
+Medium:
+5. Find max and min in single pass
+6. Check if array is sorted
+7. Print all elements greater than X
+
+Solutions to all 7 posted tomorrow.
+
+━━━━━━━━━━━━━━━━━━━━━━
+KEY TAKEAWAYS
+━━━━━━━━━━━━━━━━━━━━━━
+
+1. Arrays = contiguous memory = O(1) access
+2. Index starts from 0 always
+3. arr.length (no brackets) for size
+4. Insert/Delete = O(n) due to shifting
+5. Use ArrayList when size is unknown
+6. Arrays.sort() = O(n log n) internally
+   uses Dual-Pivot QuickSort
+
+━━━━━━━━━━━━━━━━━━━━━━
+TOMORROW — Day 2
+━━━━━━━━━━━━━━━━━━━━━━
+
+Topic: Array Traversal Patterns
++ Solutions to today's 7 problems
++ 2D Array traversal (row, column, diagonal)
+
+Stay consistent. One day = one step closer 
+to your dream company.
+
+Full archive: [Notion Link]
+Code repo: [GitHub Link]
+
+— DSA Daily by LilByte
